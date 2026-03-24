@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Admin Territorio Verde</title>
+  <link rel="icon" href="../img/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; background: #eef5ee; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .login-card { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+    .logo img { width: 100px; margin-bottom: 20px; }
+    h2 { color: #006b3f; margin-bottom: 30px; }
+    .input-group { margin-bottom: 20px; text-align: left; }
+    .input-group label { display: block; margin-bottom: 5px; color: #555; }
+    .input-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+    button { width: 100%; padding: 12px; border: none; border-radius: 6px; background: #006b3f; color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #049c5a; }
+    #errorMsg { color: #d9534f; font-size: 14px; margin-top: 15px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo"><img src="../img/barranquero.png" alt="Admin"></div>
+    <h2>Panel de Control</h2>
+    <div class="input-group">
+      <label>Usuario</label>
+      <input type="text" id="user" placeholder="Ingrese su usuario">
+    </div>
+    <div class="input-group">
+      <label>Contraseña</label>
+      <input type="password" id="pass" placeholder="Ingrese su clave">
+    </div>
+    <button onclick="login()">Ingresar</button>
+    <div id="errorMsg">Credenciales incorrectas</div>
+  </div>
+
+  <script>
+    async function login() {
+      const user = document.getElementById('user').value;
+      const pass = document.getElementById('pass').value;
+      
+      try {
+        const response = await fetch('../api.php?action=login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user, pass })
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          localStorage.setItem('admin_token', result.token);
+          window.location.href = 'dashboard.html';
+        } else {
+          document.getElementById('errorMsg').style.display = 'block';
+        }
+      } catch (e) {
+        console.error("Error al intentar iniciar sesión", e);
+      }
+    }
+  </script>
+</body>
+</html>

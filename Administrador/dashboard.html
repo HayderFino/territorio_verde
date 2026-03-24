@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Admin Territorio Verde</title>
+  <link rel="icon" href="../img/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f4f7f4;
+      display: flex;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #006b3f;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      padding: 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
+    }
+
+    .sidebar li:hover,
+    .sidebar li.active {
+      background: #049c5a;
+    }
+
+    .sidebar li i {
+      margin-right: 10px;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .btn-save {
+      background: #006b3f;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn-save:hover {
+      background: #049c5a;
+    }
+
+    /* ESTILOS MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      /* Se activa con JS */
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: white;
+      width: 500px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .btn-cancel {
+      background: #ccc;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-confirm {
+      background: #006b3f;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* MODAL DE IMÁGENES */
+    .img-preview-container {
+      text-align: center;
+      margin: 15px 0;
+      border: 2px dashed #ddd;
+      border-radius: 12px;
+      padding: 20px;
+      background: #fafafa;
+    }
+
+    .img-preview-container img {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MODAL DE IMÁGENES -->
+  <div id="imageModal" class="modal-overlay">
+    <div class="modal-card" style="width: 600px;">
+      <h2 style="margin-top:0; color:#006b3f;">Previsualizar Imagen</h2>
+      <div class="img-preview-container">
+        <img id="imagePreview" src="" alt="Previsualización">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeImageModal()">Cancelar</button>
+        <button class="btn-confirm" id="confirmImageBtn">Subir y Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENTANA EMERGENTE (MODAL) -->
+  <div id="itemModal" class="modal-overlay">
+    <div class="modal-card">
+      <h2 style="margin-top:0; color:#006b3f;">Añadir Nuevo Elemento</h2>
+      <div id="modalBody">
+        <!-- Campos generados dinámicamente -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+        <button class="btn-confirm" onclick="confirmAdd()">Añadir a la lista</button>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <h2>Admin Verde</h2>
+    <ul>
+      <li class="active" onclick="showSection('inicio')"><i class="fas fa-home"></i> Inicio</li>
+      <li onclick="showSection('programacion')"><i class="fas fa-calendar-alt"></i> Programación</li>
+      <li onclick="showSection('nosotros')"><i class="fas fa-users"></i> Nosotros</li>
+      <li onclick="showSection('contacto')"><i class="fas fa-envelope"></i> Contacto</li>
+      <li onclick="logout()" style="margin-top: 50px; color: #ff9999;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div class="header">
+      <h1 id="sectionTitle">Inicio</h1>
+      <button class="btn-save" onclick="saveChanges()">Guardar Cambios</button>
+    </div>
+
+    <div id="editorArea" class="card">
+      <!-- Los campos de edición se cargarán dinámicamente aquí -->
+    </div>
+  </div>
+
+  <script>
+    if (localStorage.getItem('admin_token') !== 'logged_in') window.location.href = 'index.html';
+
+    let currentData = {};
+    let currentSection = 'inicio';
+
+    async function showSection(section) {
+      currentSection = section;
+      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
+      const activeLi = Array.from(document.querySelectorAll('.sidebar li')).find(li => li.innerText.toLowerCase().includes(section));
+      if (activeLi) activeLi.classList.add('active');
+      document.getElementById('sectionTitle').innerText = "Editando: " + section.charAt(0).toUpperCase() + section.slice(1);
+
+      try {
+        const res = await fetch(`../api.php?action=data&section=${section}`);
+        if (!res.ok) throw new Error("No encontrado");
+        currentData = await res.json();
+        renderEditor();
+      } catch (e) {
+        document.getElementById('editorArea').innerHTML = `<div style="color:red; text-align:center; padding:20px;">
+            <i class="fas fa-exclamation-triangle fa-3x"></i><br><br>
+            No se pudo cargar la sección "${section}". Asegúrate de que el archivo existe en /data/${section}/config.json
+        </div>`;
+      }
+    }
+
+    function renderEditor() {
+      const area = document.getElementById('editorArea');
+      area.innerHTML = '';
+
+      for (let key in currentData) {
+        let fieldHtml = '';
+        const title = key.replace(/_/g, ' ').toUpperCase();
+
+        if (typeof currentData[key] === 'string') {
+          fieldHtml = `
+            <div class="form-group">
+              <label>${title}</label>
+              ${(key.includes('imagen') || key.includes('image')) ?
+              `<div style="display:flex; align-items:center; gap:20px;">
+                    <img src="${currentData[key] ? '../' + currentData[key] : 'https://placehold.co/80x80?text=Sin+Imagen'}" style="width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #ddd; background:#f0f0f0;">
+                    <input type="file" onchange="openImageModal('${key}', this)" style="border:none; padding:0;">
+                 </div>` :
+              (key.includes('descripcion') || key.includes('parrafo') || key.includes('historia') || currentData[key].length > 60) ?
+                `<textarea style="width:100%; border-radius:8px; border:1px solid #ddd; padding:12px; font-family:inherit; resize:vertical;" rows="5" oninput="updateData('${key}', this.value)">${currentData[key]}</textarea>` :
+                `<input type="text" value="${currentData[key]}" oninput="updateData('${key}', this.value)">`
+            }
+            </div>
+          `;
+        } else if (Array.isArray(currentData[key])) {
+          fieldHtml = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:40px; border-bottom:2px solid #006b3f; padding-bottom:10px; margin-bottom:20px;">
+                <h3 style="margin:0; color:#006b3f;">${title}</h3>
+                <button onclick="openModal('${key}')" style="background:#049c5a; color:white; border:none; padding:8px 20px; border-radius:8px; cursor:pointer; font-weight:600;"><i class="fas fa-plus"></i> Añadir Nuevo</button>
+            </div>
+          `;
+
+          currentData[key].forEach((item, index) => {
+            fieldHtml += `<div style="padding:20px; border:1px solid #eee; margin-bottom:20px; border-radius:12px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.03); position:relative;">
+               <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                 <span style="font-weight:700; color:#666;">Elemento #${index + 1}</span>
+                 <button onclick="deleteItem('${key}', ${index})" style="background:none; border:none; color:#d9534f; cursor:pointer;" title="Eliminar"><i class="fas fa-trash"></i></button>
+               </div>`;
+            for (let subKey in item) {
+              fieldHtml += `
+                 <div class="form-group">
+                   <label>${subKey.toUpperCase()}</label>
+                   ${(subKey.includes('imagen') || subKey.includes('image')) ?
+                  `<div style="display:flex; align-items:center; gap:20px;">
+                        <img src="${item[subKey] ? '../' + item[subKey] : 'https://placehold.co/80x80?text=Sin+Imagen'}" style="width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #ddd; background:#f0f0f0;">
+                        <input type="file" onchange="openImageModal('${key}', this, ${index}, '${subKey}')" style="border:none; padding:0;">
+                      </div>` :
+                  (subKey.includes('descripcion') || subKey.includes('parrafo') || subKey.includes('historia') || (typeof item[subKey] === 'string' && item[subKey].length > 60)) ?
+                    `<textarea style="width:100%; border-radius:8px; border:1px solid #ddd; padding:12px; font-family:inherit; resize:vertical;" rows="4" oninput="updateArrayData('${key}', ${index}, '${subKey}', this.value)">${item[subKey]}</textarea>` :
+                    `<input type="text" value="${item[subKey]}" oninput="updateArrayData('${key}', ${index}, '${subKey}', this.value)">`
+                }
+                 </div>
+               `;
+            }
+            fieldHtml += `</div>`;
+          });
+        } else if (typeof currentData[key] === 'object') {
+          fieldHtml = `<h3 style="color:#006b3f; margin-top:30px;">${title}</h3>`;
+          for (let subKey in currentData[key]) {
+            fieldHtml += `
+                 <div class="form-group">
+                   <label>${subKey.toUpperCase()}</label>
+                   ${(subKey.includes('imagen') || subKey.includes('image')) ?
+                `<div style="display:flex; align-items:center; gap:20px;">
+                        <img src="${currentData[key][subKey] ? '../' + currentData[key][subKey] : 'https://placehold.co/80x80?text=Sin+Imagen'}" style="width:80px; height:80px; object-fit:cover; border-radius:8px; border:1px solid #ddd; background:#f0f0f0;">
+                        <input type="file" onchange="openImageModal('${key}', this, null, '${subKey}')" style="border:none; padding:0;">
+                       </div>` :
+                (subKey.includes('descripcion') || subKey.includes('parrafo') || subKey.includes('historia') || (typeof currentData[key][subKey] === 'string' && currentData[key][subKey].length > 60)) ?
+                  `<textarea style="width:100%; border-radius:8px; border:1px solid #ddd; padding:12px; font-family:inherit; resize:vertical;" rows="4" oninput="updateObjectData('${key}', '${subKey}', this.value)">${currentData[key][subKey]}</textarea>` :
+                  `<input type="text" value="${currentData[key][subKey]}" oninput="updateObjectData('${key}', '${subKey}', this.value)">`
+              }
+                 </div>
+              `;
+          }
+        }
+        area.innerHTML += fieldHtml;
+      }
+    }
+
+    // --- FUNCIONES DE ACTUALIZACIÓN DE DATOS ---
+    function updateData(key, value) {
+      currentData[key] = value;
+    }
+    function updateArrayData(key, index, subKey, value) {
+      currentData[key][index][subKey] = value;
+    }
+    function updateObjectData(key, subKey, value) {
+      currentData[key][subKey] = value;
+    }
+
+    // --- LOGICA DEL MODAL ---
+    let pendingItemData = {};
+    let pendingArrayKey = "";
+
+    function openModal(key) {
+      pendingArrayKey = key;
+      const modal = document.getElementById('itemModal');
+      const modalBody = document.getElementById('modalBody');
+      modalBody.innerHTML = "";
+
+      let template = {};
+      if (currentData[key].length > 0) {
+        template = JSON.parse(JSON.stringify(currentData[key][0]));
+        for (let k in template) template[k] = "";
+      }
+      pendingItemData = template;
+
+      for (let subKey in pendingItemData) {
+        modalBody.innerHTML += `
+                <div class="form-group">
+                    <label>${subKey.toUpperCase()}</label>
+                    ${(subKey.includes('imagen') || subKey.includes('image')) ?
+            `<input type="file" onchange="uploadImageForPending('${subKey}', this)" style="padding:10px; border:1px dashed #ccc; width:100%;">
+             <small style="color:#006b3f; font-weight:bold; display:block; margin-top:5px;" id="msg-${subKey}">* Selecciona el archivo para enlazarlo.</small>` :
+            `<input type="text" placeholder="Ingrese ${subKey}" onchange="pendingItemData['${subKey}'] = this.value">`
+          }
+                </div>
+            `;
+      }
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById('itemModal').style.display = "none";
+    }
+
+    async function uploadImageForPending(subKey, input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const msgLabel = document.getElementById('msg-'+subKey);
+      if(msgLabel) msgLabel.innerText = "Subiendo imagen... por favor espera.";
+
+      const formData = new FormData();
+      formData.append('section', currentSection);
+      formData.append('image', file);
+
+      try {
+        const res = await fetch(`../api.php?action=upload&section=${currentSection}`, { method: 'POST', body: formData });
+        const result = await res.json();
+        pendingItemData[subKey] = result.url;
+        if(msgLabel) {
+           msgLabel.style.color = "#2ea44f";
+           msgLabel.innerText = "¡Imagen lista y vinculada!";
+        }
+      } catch (e) {
+        if(msgLabel) {
+           msgLabel.style.color = "red";
+           msgLabel.innerText = "Error al subir la imagen.";
+        }
+      }
+    }
+
+    async function confirmAdd() {
+      currentData[pendingArrayKey].push({ ...pendingItemData });
+      closeModal();
+      await persistChanges(); // GUARDADO AUTOMÁTICO
+      renderEditor();
+    }
+
+    // --- LOGICA MODAL DE IMÁGENES ---
+    let imageTarget = { key: null, index: null, subKey: null };
+    let tempFile = null;
+
+    function openImageModal(key, input, index = null, subKey = null) {
+      imageTarget = { key, index, subKey };
+      tempFile = input.files[0];
+      if (!tempFile) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('imagePreview').src = e.target.result;
+        document.getElementById('imageModal').style.display = "flex";
+      };
+      reader.readAsDataURL(tempFile);
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').style.display = "none";
+    }
+
+    document.getElementById('confirmImageBtn').onclick = async () => {
+      if (!tempFile) return;
+      const btn = document.getElementById('confirmImageBtn');
+      btn.innerText = "Subiendo...";
+
+      const formData = new FormData();
+      // IMPORTANTE: Primero enviar la sección para que el servidor sepa dónde guardar antes de procesar la imagen
+      formData.append('section', currentSection);
+      formData.append('image', tempFile);
+
+      try {
+        const res = await fetch(`../api.php?action=upload&section=${currentSection}`, { method: 'POST', body: formData });
+        const result = await res.json();
+
+        if (imageTarget.index !== null) {
+          currentData[imageTarget.key][imageTarget.index][imageTarget.subKey] = result.url;
+        } else if (imageTarget.subKey !== null) {
+          currentData[imageTarget.key][imageTarget.subKey] = result.url;
+        } else {
+          currentData[imageTarget.key] = result.url;
+        }
+
+        await persistChanges(); // GUARDADO AUTOMÁTICO TRAS IMAGEN
+        closeImageModal();
+        renderEditor();
+      } catch (e) {
+        alert("Error al subir imagen");
+      } finally {
+        btn.innerText = "Subir y Guardar";
+      }
+    };
+
+    async function deleteItem(key, index) {
+      if (confirm("¿Estás seguro de que deseas eliminar este elemento?")) {
+        currentData[key].splice(index, 1);
+        await persistChanges(); // GUARDADO AUTOMÁTICO TRAS BORRAR
+        renderEditor();
+      }
+    }
+
+    // Función Central de Persistencia
+    async function persistChanges() {
+      try {
+        await fetch(`../api.php?action=data&section=${currentSection}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentData)
+        });
+        console.log("💾 Cambios persistidos en el servidor automaticamente.");
+      } catch (e) {
+        console.error("Error en persistencia automática:", e);
+      }
+    }
+
+    async function saveChanges() {
+      const btn = document.querySelector('.btn-save');
+      const originalText = btn.innerText;
+      btn.innerText = "Guardando...";
+      btn.disabled = true;
+
+      try {
+        await persistChanges(); // Reutiliza la función central
+        btn.style.background = "#2ea44f";
+        btn.innerText = "¡Guardado!";
+        setTimeout(() => {
+          btn.style.background = "#006b3f";
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (e) {
+        alert("Error al guardar: " + e.message);
+        btn.innerText = originalText;
+        btn.disabled = false;
+      }
+    }
+
+
+    function logout() {
+      localStorage.removeItem('admin_token');
+      window.location.href = 'index.html';
+    }
+
+    // Carga inicial
+    showSection('inicio');
+  </script>
+</body>
+
+</html>

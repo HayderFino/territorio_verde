@@ -1,0 +1,40 @@
+{
+    "banner": {
+        "image": "data/inicio/fondo-ligero2.jpg"
+    },
+    "programas_destacados": [
+        {
+            "titulo": "Guardianes del Agua",
+            "descripcion": "Historias, proyectos y comunidades que protegen las fuentes hídricas de nuestra región.",
+            "imagen": "data/inicio/programa1.png"
+        },
+        {
+            "titulo": "Saberes del Campo",
+            "descripcion": "Un recorrido por los conocimientos tradicionales que impulsan la sostenibilidad rural.",
+            "imagen": "data/inicio/programa2.png"
+        },
+        {
+            "titulo": "Voces del Territorio",
+            "descripcion": "Testimonios de líderes ambientales, organizaciones y ciudadanos que transforman su entorno.",
+            "imagen": "data/inicio/programa3.png"
+        }
+    ],
+    "parrilla": [
+        {
+            "dia": "Lunes",
+            "programa": "Guardianes del Agua",
+            "horario": "8:00 AM - 9:00 AM"
+        },
+        {
+            "dia": "Miércoles",
+            "programa": "Saberes del Campo",
+            "horario": "10:00 AM - 11:00 AM"
+        },
+        {
+            "dia": "Viernes",
+            "programa": "Voces del Territorio",
+            "horario": "5:00 PM - 6:00 PM"
+        }
+    ],
+    "youtube_embed": "https://www.youtube.com/embed/videoseries?list=PLFxlJa7iUVKvQnztdoyjwARFI4R0zNuGz"
+}

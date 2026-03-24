@@ -1,0 +1,32 @@
+{
+    "intro": {
+        "titulo": "Nuestra Programación",
+        "descripcion": "En Territorio Verde ofrece una variada parrilla de programas enfocados en temas ambientales, cultura, participación ciudadana y sostenibilidad. "
+    },
+    "parrilla_extendida": [
+        {
+            "hora": "7:00 - 8:00 a.m.",
+            "lunes": "Buenos Días Verde",
+            "martes": "Buenos Días Verde",
+            "miercoles": "Buenos Días Verde",
+            "jueves": "Buenos Días Verde",
+            "viernes": "Buenos Días Verde"
+        },
+        {
+            "hora": "8:00 - 9:00 a.m.",
+            "lunes": "Territorio y Comunidad",
+            "martes": "Voces del Agua",
+            "miercoles": "Ambiente y Ciudad",
+            "jueves": "Territorio y Comunidad",
+            "viernes": "Voces del Agua"
+        },
+        {
+            "hora": "9:00 - 10:00 a.m.",
+            "lunes": "EcoMúsica",
+            "martes": "EcoMúsica",
+            "miercoles": "EcoMúsica",
+            "jueves": "EcoMúsica",
+            "viernes": "EcoMúsica"
+        }
+    ]
+}

@@ -1,0 +1,712 @@
+/* =========================
+   ESTILOS GENERALES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fdfdfd;
+  color: #2f4f2f;
+  line-height: 1.6;
+  padding-top: 130px;
+}
+
+/* =========================
+   ENCABEZADO FIJO
+========================= */
+.main-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  transition: transform 0.4s ease;
+  height: 70px;
+}
+
+.main-header.hide {
+  transform: translateY(-100%);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo img {
+  height: 48px;
+}
+
+.logo h1 {
+  font-size: 1.3rem;
+  color: #006b3f;
+  font-weight: 700;
+}
+
+/* =========================
+   MENÚ DE NAVEGACIÓN
+========================= */
+.nav-menu {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #2f4f2f;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: #006b3f;
+  font-weight: 600;
+}
+
+/* =========================
+   SECCIONES GENERALES
+========================= */
+.section-container {
+  max-width: 1200px;
+  margin: 7rem auto 4rem auto;
+  padding: 0 1.5rem;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.intro h2 {
+  font-size: 2rem;
+  color: #006b3f;
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   TABLA DE PROGRAMAS
+========================= */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.schedule-table th {
+  background: #006b3f;
+  color: white;
+  font-weight: 600;
+}
+
+.schedule-table tr:hover td {
+  background: #f3f9f5;
+}
+
+/* =========================
+   TARJETAS DE PROGRAMAS
+========================= */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h4 {
+  color: #006b3f;
+  margin: 1rem 0 0.5rem;
+}
+
+.card p {
+  padding: 0 1rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   CONTACTO
+========================= */
+.contact-placeholder {
+  background: #f5f8f5;
+  border: 1px solid #d6e9d6;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  color: #2f4f2f;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.contact-info ul {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.contact-info li {
+  margin-bottom: 0.8rem;
+  font-size: 1.05rem;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.social-icon {
+  color: #006b3f;
+  font-weight: 600;
+  text-decoration: none;
+  background: #e6f3ec;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background: #006b3f;
+  color: white;
+}
+
+/* =========================
+   BOTÓN ENVIAR
+========================= */
+.btn-send {
+  display: inline-block;
+  background: #006b3f;
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-send:hover {
+  background: #049c5a;
+  transform: scale(1.05);
+}
+
+/* =====================================================
+   BANNER VISUAL (solo imagen)
+   ===================================================== */
+.banner-informativo {
+  position: relative;
+  width: 100%;
+  height: 500px; /* ajusta según el alto que desees */
+  background: url('../img/fondo-ligero2.jpg') center/cover no-repeat, #f5f9f4;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* (Estilos unificados en .main-header) */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 70px;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+
+.header-logo {
+  position: absolute;
+  bottom: -20px; /* o el valor que tengas ajustado */
+  left: -30px; /* mueve la imagen hacia la izquierda */
+  z-index: 10;
+}
+
+.header-logo img {
+  max-height: 180px; /* ajusta el tamaño que ya tenías */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+  .header-logo {
+    left: -10px; /* menos desplazamiento en pantallas pequeñas */
+    bottom: -10px;
+  }
+
+  .header-logo img {
+    max-height: 120px;
+  }
+}
+
+
+/* ======= MENÚ DE NAVEGACIÓN ======= */
+.nav-menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-menu ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #155c39;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover,
+.nav-menu .active {
+  color: #f39200;
+}
+
+.btn-login {
+  background: #155c39;
+  color: white !important;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background: #f39200;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ==== AUDIO Y EN VIVO ==== */
+.seccion-audio {
+  position: fixed;       /* mantiene la barra siempre visible */
+  top: 70px;             /* justo debajo del header fijo */
+  right: 0;
+  left: 0;
+  z-index: 900;          /* por encima del contenido */
+  display: flex;
+  justify-content: flex-end;
+  align-items: right;
+  padding: 10px 40px;
+  background-color: #eaf6ed;
+  border-top: 1px solid #d2e6d4;
+  border-bottom: 1px solid #d2e6d4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-audio {
+  position: fixed;
+  right: 40px;
+  top: calc((70px - 46px) / 2); /* (headerHeight - audioHeight) / 2 */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 950;
+  background: transparent;
+  height: 46px; /* ajusta según el alto real del control */
+}
+
+.seccion-audio, .contenedor-audio {
+  height: 50px;
+  overflow: hidden;
+}
+
+audio {
+  width: 220px;
+  height: 30px;
+}
+
+#liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #666;
+}
+
+.live-waves {
+  display: flex;
+  gap: 3px;
+  height: 15px;
+  align-items: flex-end;
+}
+
+.live-waves span {
+  display: block;
+  width: 3px;
+  height: 8px;
+  background-color: #bbb;
+  border-radius: 2px;
+}
+
+/* Ondas animadas cuando está "En Vivo" */
+#liveIndicator.live .live-waves span {
+  background-color: #2ea44f;
+  animation: waveMove 1s infinite ease-in-out;
+}
+
+#liveIndicator.live .live-waves span:nth-child(1) { animation-delay: 0s; }
+#liveIndicator.live .live-waves span:nth-child(2) { animation-delay: 0.2s; }
+#liveIndicator.live .live-waves span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes waveMove {
+  0%, 100% { height: 6px; }
+  50% { height: 14px; }
+}
+
+/* Estado Fuera del Aire */
+#liveIndicator.offline .live-waves span {
+  background-color: #aaa;
+  animation: none;
+}
+
+#liveIndicator.offline #liveText {
+  color: #888;
+}
+
+/* ==== FOOTER ==== */
+.footer {
+  background-color: #176941; /* un verde más luminoso */
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  background-image: url('../img/Recurso4.png');
+  background-size: 800px;
+  background-position: center 60px;
+  background-repeat: no-repeat;
+  z-index: 500;
+}
+
+.footer a {
+  color: #d7f9d5;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+  text-decoration: underline;
+}
+
+/* Fondo con imagen ecológica + mezcla */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/Recurso4.png") center 50% / 130% no-repeat;
+  background-blend-mode: multiply; /* mezcla ecológica */
+  opacity: 0.20;
+  z-index: 0;              
+  pointer-events: none;    
+}
+
+
+/* Capas de texto e información */
+.footer-container,
+.footer-bottom {
+  position: relative;
+  z-index: 1500;
+}
+
+/* estructura interior */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  width: 300px;
+  margin-bottom: 0px;
+}
+
+.footer-info h4,
+.footer-social h4 {
+  color: #f6b93b;
+  margin-bottom: 10px;
+}
+
+.footer-info p {
+  margin: 5px 0;
+  color: #eaeaea;
+}
+
+.footer .social-icons a {
+  color: #d7f9d5;
+  margin: 0 10px;
+  font-size: 1.4rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+  color: #fff;
+  transform: scale(1.15);
+}
+
+
+.footer-bottom {
+  margin-top: 15px;
+  font-size: 14px;
+  padding: 12px;
+  color: #eee;
+  background: transparent;  /* elimina el fondo */
+}
+
+/* ==== Versión Responsive ==== */
+@media (max-width: 768px) {
+  .contenedor-audio {
+    position: relative;    /* vuelve al flujo */
+    top: 0;
+    right: 0;
+    margin-left: 0;
+    justify-self: end;
+    height: auto;
+    padding: 8px 0;
+  }
+
+  /* Reduce el ancho del control para móviles */
+  audio {
+    width: 160px;
+  }
+
+  /* Si el menú colapsa y queda demasiado junto, pon el audio debajo */
+  .header-container {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 16px;
+  }
+}
+
+/* ======= YOUTUBE EMBED ======= */
+.youtube-section {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.youtube-section h2 {
+  color: #006b3f;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.youtube-frame {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9; /* mantiene proporción correcta */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.youtube-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* === Footer Links Elegantes === */
+.footer a {
+  color: #c8f7c5; /* Verde claro institucional CAS */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffffff; /* Blanco puro al pasar el cursor */
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+  text-decoration: underline;
+}
+
+/* ==== Imagen institucional del Barranquero ==== */
+.barranquero-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+.barranquero-img {
+  position: absolute;
+  left: 5%;
+  bottom: -140px; /* desborda hacia el banner */
+  max-height: 200px;
+  z-index: 10;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.barranquero-img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+  .barranquero-img {
+    max-height: 90px;
+    left: 2%;
+    bottom: -25px;
+  }
+}
+
+
+/* Ajuste para empujar el menú a la izquierda y equilibrar el header */
+nav ul {
+  margin-left: 0; /* antes -100px */
+}
+
+nav {
+  flex-grow: 0;
+  text-align: initial;
+}
+
+/* Imagen del barranquero flotando sobre el header */
+.barranquero-logo {
+  position: absolute; /* lo saca del flujo normal */
+  top: -20px;          /* ajusta verticalmente */
+  left: 20px;          /* ajusta horizontalmente */
+  width: 150px;        /* tamaño controlado */
+  max-height: 200px;
+  z-index: 20;         /* asegura que quede sobre los demás elementos */
+  pointer-events: none; /* evita que bloquee clics sobre el menú */
+}
+
+.header,
+.header-container,
+.contenedor-audio {
+  overflow: visible; /* evita que se creen capas invisibles */
+}
+
+/* =========================================
+   RESPONSIVO MULTIDISPOSITIVO (Tablets/Móvil)
+========================================= */
+@media (max-width: 1000px) {
+  .main-header {
+    height: auto;
+    padding: 10px;
+    position: relative; /* Evita que flote encima en celulares cortando el contenido */
+  }
+  
+  .header-container {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 10px;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .contenedor-audio {
+    position: relative;
+    right: auto;
+    top: auto;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    height: auto;
+    padding: 10px 0;
+  }
+  
+  .nav-menu {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .nav-menu ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .barranquero-logo {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 120px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  body {
+    padding-top: 20px; /* Como el header ya no es "fixed" arriba, soltamos el espacio */
+  }
+}
+
+@media (max-width: 500px) {
+  audio {
+    width: 220px;
+  }
+  .btn-login {
+    padding: 6px 12px;
+    font-size: 13px;
+    width: 100%;
+    justify-content: center;
+  }
+}

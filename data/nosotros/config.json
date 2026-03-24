@@ -1,0 +1,21 @@
+{
+  "historia": {
+    "titulo": "Sobre Nosotros",
+    "parrafo1": "En Territorio Verde es una emisora comprometida con la sostenibilidad, la educación ambiental y la participación ciudadana. Nuestra misión es informar, inspirar y conectar a las comunidades con el territorio, promoviendo buenas prácticas ambientales y la conciencia ecológica.",
+    "parrafo2": "A través de nuestra programación, buscamos fortalecer la identidad ambiental, apoyar proyectos locales y brindar un espacio para las voces que construyen un futuro verde."
+  },
+  "valores": [
+    {
+      "titulo": "Educación",
+      "descripcion": "Promovemos el conocimiento ambiental como base para el cambio."
+    },
+    {
+      "titulo": "Participación",
+      "descripcion": "Impulsamos la colaboración entre comunidades y actores locales."
+    },
+    {
+      "titulo": "Sostenibilidad",
+      "descripcion": "Trabajamos por un equilibrio entre el desarrollo y el medio ambiente."
+    }
+  ]
+}
