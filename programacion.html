@@ -10,25 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- HEADER -->
   <header class="main-header" id="mainHeader">
     <div class="header-container">
       <div class="logo-container">
         <img src="logo.jpeg" alt="En Territorio Verde – Radio CAS" class="site-logo" loading="lazy">
       </div>
 
-      <!-- menú -->
       <nav class="nav-menu" aria-label="Menú principal">
         <ul>
           <li><a href="index.html">Inicio</a></li>
           <li><a href="programacion.html" class="active">Programación</a></li>
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="contacto.html">Contacto</a></li>
-          <li class="admin-link" style="display:none"><a href="Administrador/index.html" class="btn-login"><i class="fas fa-user-lock"></i> Ingresar</a></li>
         </ul>
       </nav>
 
-      <!-- reproductor a la derecha -->
       <div class="contenedor-audio">
         <audio id="stream" preload="auto">
           <source src="https://sonic.paulatina.co/8186/stream" type="audio/mpeg" />
@@ -42,8 +38,8 @@
           <span id="liveText">Oír en Vivo</span>
         </button>
 
-        <button class="btn-share" onclick="shareLink()" title="Compartir enlace">
-          <i class="fas fa-share-alt"></i>
+        <button class="btn-share" onclick="toggleExportModal()" title="Exportar Emisora">
+          <i class="fas fa-share-nodes"></i>
         </button>
 
         <div id="liveIndicator" class="offline" aria-live="polite" role="status">
@@ -56,7 +52,6 @@
     </div>
   </header>
 
-  <!-- Contenido principal -->
   <main class="section-container">
     <section class="intro">
       <h2>Nuestra Programación</h2>
@@ -66,7 +61,6 @@
       </p>
     </section>
 
-    <!-- Parrilla de Programas -->
     <section class="schedule">
       <h3>Parrilla de Emisiones</h3>
       <table class="schedule-table">
@@ -114,14 +108,6 @@
             <td>Jóvenes por el Cambio</td>
           </tr>
           <tr>
-            <td>10:00 - 11:00 a.m.</td>
-            <td>Jóvenes por el Cambio</td>
-            <td>Educación Verde</td>
-            <td>Jóvenes por el Cambio</td>
-            <td>Educación Verde</td>
-            <td>Jóvenes por el Cambio</td>
-          </tr>
-          <tr>
             <td>11:00 - 12:00 m.</td>
             <td>Ambiente en Acción</td>
             <td>Ambiente en Acción</td>
@@ -133,7 +119,6 @@
       </table>
     </section>
 
-    <!-- Sección de Programas destacados -->
     <section class="program-cards">
       <h3>Programas Destacados</h3>
       <div class="cards-grid">
@@ -156,7 +141,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-watermark">
       <img src="img/logo11.png" alt="" aria-hidden="true">
@@ -189,7 +173,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=reproductor_v1000"></script>
+  <script src="js/main.js?v=v2000_final"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => loadContent('programacion'));
   </script>

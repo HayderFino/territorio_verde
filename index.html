@@ -5,40 +5,31 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>En Territorio Verde · Radio CAS</title>
   <link rel="icon" href="img/favicon.png" type="image/png" />
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css?v=3" />
-
-  <!-- Si usas iconos (opcional) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-  <!-- HEADER -->
-    <header class="main-header" id="mainHeader">
-	  <div class="header-container">
-      	<!-- Logo institucional En Territorio Verde -->
-          <div class="logo-container">
-    <img src="logo.jpeg" alt="En Territorio Verde – Radio CAS" class="site-logo" loading="lazy">
-  </div>
+  <header class="main-header" id="mainHeader">
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="logo.jpeg" alt="En Territorio Verde – Radio CAS" class="site-logo" loading="lazy">
+      </div>
 
-      <!-- menú -->
       <nav class="nav-menu" aria-label="Menú principal">
         <ul>
           <li><a href="index.html" class="active">Inicio</a></li>
           <li><a href="programacion.html">Programación</a></li>
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="contacto.html">Contacto</a></li>
-          <li class="admin-link" style="display:none"><a href="Administrador/index.html" class="btn-login"><i class="fas fa-user-lock"></i> Ingresar</a></li>
         </ul>
       </nav>
-      <!-- reproductor a la derecha -->
+
       <div class="contenedor-audio">
         <audio id="stream" preload="auto">
           <source src="https://sonic.paulatina.co/8186/stream" type="audio/mpeg" />
         </audio>
 
-        <!-- Botón En Vivo destacado -->
         <button id="btnLive" class="btn-live" onclick="toggleRadioStream()" title="Oír en Vivo">
           <div class="freq-waves" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span>
@@ -47,9 +38,8 @@
           <span id="liveText">Oír en Vivo</span>
         </button>
 
-        <!-- Botón Compartir -->
-        <button class="btn-share" onclick="shareLink()" title="Compartir enlace">
-          <i class="fas fa-share-alt"></i>
+        <button class="btn-share" onclick="toggleExportModal()" title="Exportar Emisora">
+          <i class="fas fa-share-nodes"></i>
         </button>
 
         <div id="liveIndicator" class="offline" aria-live="polite" role="status">
@@ -62,54 +52,14 @@
     </div>
   </header>
 
-  <!-- AUDIO SECCIÓN SEPARADA
-<section class="seccion-audio">
-  <div class="contenedor-audio">
-    <audio id="stream" controls preload="none">
-      <source src="https://sonic.paulatina.co/8186/stream" type="audio/mpeg" />
-      Tu navegador no soporta la reproducción de audio.
-    </audio>
-
-    <div id="liveIndicator" class="offline" aria-live="polite" role="status">
-      <div class="live-waves" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
-      <span id="liveText">Fuera del Aire</span>
+  <section id="banner-carousel" class="banner-informativo">
+    <div class="carousel-container">
+      <div id="carousel-slides" class="carousel-slides"></div>
+      <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
     </div>
-  </div>
-</section> -->
+  </section>
 
-
-
-<!-- ======= BANNER VISUAL ======= -->
-<!-- ======= BANNER VISUAL (Carousel) ======= -->
-<section id="banner-carousel" class="banner-informativo">
-  <div class="carousel-container">
-    <div id="carousel-slides" class="carousel-slides">
-      <!-- Slides are injected dynamically via JS -->
-    </div>
-    <!-- Carousel controls (optional) -->
-    <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-    <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
-  </div>
-</section>
-
-
-  <!-- =======================
-       HERO SECTION
-  ======================= -->
-  <!--<section class="section-container intro">
-    <h2>Conectando con la Naturaleza</h2>
-    <p>
-      Bienvenido a <strong>En Territorio Verde</strong>, un espacio dedicado a las voces del territorio, 
-      la sostenibilidad y la educación ambiental. Aquí encontrarás programas que inspiran acciones reales 
-      para cuidar nuestro entorno y promover una convivencia armoniosa con la naturaleza.
-    </p>
-  </section>-->
-
-  <!-- =======================
-       PROGRAMAS DESTACADOS
-  ======================= -->
   <section class="section-container">
     <h2>Programas Destacados</h2>
     <div class="cards-grid">
@@ -118,13 +68,11 @@
         <h4>Guardianes del Agua</h4>
         <p>Historias, proyectos y comunidades que protegen las fuentes hídricas de nuestra región.</p>
       </div>
-
       <div class="card">
         <img src="img/programa2.png" alt="Programa Saberes del Campo">
         <h4>Saberes del Campo</h4>
         <p>Un recorrido por los conocimientos tradicionales que impulsan la sostenibilidad rural.</p>
       </div>
-
       <div class="card">
         <img src="img/programa3.png" alt="Programa Voces del Territorio">
         <h4>Voces del Territorio</h4>
@@ -133,9 +81,6 @@
     </div>
   </section>
 
-  <!-- =======================
-       PARRILLA DE EMISIONES
-  ======================= -->
   <section class="section-container">
     <h2>Parrilla de Emisiones</h2>
     <table class="schedule-table">
@@ -166,85 +111,51 @@
     </table>
   </section>
 
-  <!-- =======================
-     CANAL YOUTUBE EN VIVO
-======================= -->
-<section class="section-container youtube-section">
-  <h2>Transmisión del Canal de YouTube</h2>
-  <div class="youtube-frame">
-    <iframe 
-      id="youtubeIframe"
-      data-src="https://www.youtube.com/embed/videoseries?list=PLFxlJa7iUVKvQnztdoyjwARFI4R0zNuGz" 
-      title="Video institucional CAS"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      loading="lazy"
-      allowfullscreen>
-    </iframe>
-  </div>
-</section>
-
-
-
-  <!-- =======================
-       CONTACTO / REDES
-  ======================= -->
-  <!--
-  <section class="section-container">
-    <h2>Conéctate con Nosotros</h2>
-    <div class="contact-placeholder">
-      <p>
-        Síguenos en nuestras redes sociales para conocer más sobre nuestros programas, 
-        invitados y noticias del territorio.
-      </p>
-      <div class="social-media">
-        <a href="https://www.facebook.com/share/1BW3mtS38n/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="https://www.instagram.com/cas.santander?igsh=ZzN6Nnd5YWltYXcw" target="_blank"  class="social-icon"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://youtube.com/@cas_santander9133?si=XEh2lTtl3xtiagF0" class="social-icon"><i class="fab fa-youtube"></i> YouTube</a>
-      </div>
+  <section class="section-container youtube-section">
+    <h2>Transmisión del Canal de YouTube</h2>
+    <div class="youtube-frame">
+      <iframe id="youtubeIframe"
+        data-src="https://www.youtube.com/embed/videoseries?list=PLFxlJa7iUVKvQnztdoyjwARFI4R0zNuGz"
+        title="Video institucional CAS" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        loading="lazy" allowfullscreen>
+      </iframe>
     </div>
   </section>
--->
 
-  <!-- =======================
-       FOOTER
-  ======================= -->
-<footer class="footer">
-  <!-- Logo como marca de agua en el footer -->
-  <div class="footer-watermark">
-    <img src="img/logo11.png" alt="" aria-hidden="true">
-  </div>
-
-  <div class="footer-container">
-    <div class="footer-info">
-      <h4>Contáctanos</h4>
-      <p><i class="fas fa-location-dot"></i> Corporación Autónoma Regional de Santander - CAS</p>
-      <p><i class="fas fa-envelope"></i> <a href="mailto:enterritorioverde@cas.gov.co">enterritorioverde@cas.gov.co</a></p>
-      <p><i class="fas fa-envelope"></i> comunicaciones@cas.gov.co</p>
-      <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/573208036330" target="_blank">320 803 6330</a></p>
-      <p><i class="fas fa-phone"></i> (607) 622 8000</p>
-      <p><i class="fas fa-globe"></i> <a href="https://www.cas.gov.co" target="_blank">www.cas.gov.co</a></p>
+  <footer class="footer">
+    <div class="footer-watermark">
+      <img src="img/logo11.png" alt="" aria-hidden="true">
     </div>
 
-    <div class="footer-social">
-      <h4>Síguenos</h4>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/CAS.Santander" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://youtube.com/@cas_santander9133?si=XEh2lTtl3xtiagF0" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/cas.santander?igsh=ZzN6Nnd5YWltYXcw" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/573208036330" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <div class="footer-container">
+      <div class="footer-info">
+        <h4>Contáctanos</h4>
+        <p><i class="fas fa-location-dot"></i> Corporación Autónoma Regional de Santander - CAS</p>
+        <p><i class="fas fa-envelope"></i> <a href="mailto:enterritorioverde@cas.gov.co">enterritorioverde@cas.gov.co</a></p>
+        <p><i class="fas fa-envelope"></i> comunicaciones@cas.gov.co</p>
+        <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/573208036330" target="_blank">320 803 6330</a></p>
+        <p><i class="fas fa-phone"></i> (607) 622 8000</p>
+        <p><i class="fas fa-globe"></i> <a href="https://www.cas.gov.co" target="_blank">www.cas.gov.co</a></p>
+      </div>
+
+      <div class="footer-social">
+        <h4>Síguenos</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/CAS.Santander" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://youtube.com/@cas_santander9133?si=XEh2lTtl3xtiagF0" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/cas.santander?igsh=ZzN6Nnd5YWltYXcw" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/573208036330" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>© 2025 En Territorio Verde Radio — Corporación Autónoma Regional de Santander - CAS. Todos los derechos reservados.</p>
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <p>© 2025 En Territorio Verde Radio — Corporación Autónoma Regional de Santander - CAS. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-
-  <!-- JS -->
-  <script src="js/main.js?v=reproductor_v1000"></script>
+  <script src="js/main.js?v=v2000_final"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => loadContent('inicio'));
   </script>

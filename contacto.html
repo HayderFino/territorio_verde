@@ -10,25 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- HEADER -->
   <header class="main-header" id="mainHeader">
     <div class="header-container">
       <div class="logo-container">
         <img src="logo.jpeg" alt="En Territorio Verde – Radio CAS" class="site-logo" loading="lazy">
       </div>
 
-      <!-- menú -->
       <nav class="nav-menu" aria-label="Menú principal">
         <ul>
           <li><a href="index.html">Inicio</a></li>
           <li><a href="programacion.html">Programación</a></li>
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="contacto.html" class="active">Contacto</a></li>
-          <li class="admin-link" style="display:none"><a href="Administrador/index.html" class="btn-login"><i class="fas fa-user-lock"></i> Ingresar</a></li>
         </ul>
       </nav>
 
-      <!-- reproductor a la derecha -->
       <div class="contenedor-audio">
         <audio id="stream" preload="auto">
           <source src="https://sonic.paulatina.co/8186/stream" type="audio/mpeg" />
@@ -42,8 +38,8 @@
           <span id="liveText">Oír en Vivo</span>
         </button>
 
-        <button class="btn-share" onclick="shareLink()" title="Compartir enlace">
-          <i class="fas fa-share-alt"></i>
+        <button class="btn-share" onclick="toggleExportModal()" title="Exportar Emisora">
+          <i class="fas fa-share-nodes"></i>
         </button>
 
         <div id="liveIndicator" class="offline" aria-live="polite" role="status">
@@ -56,21 +52,18 @@
     </div>
   </header>
 
-  <!-- Contenido principal -->
   <main class="section-container">
     <section class="intro">
       <h2 id="cv-titulo">Contáctanos</h2>
       <p id="cv-intro" style="white-space: pre-wrap;">Queremos escucharte. Si tienes comentarios, sugerencias o deseas comunicarte con el equipo de En Territorio Verde, puedes hacerlo a través de nuestros canales oficiales.</p>
     </section>
 
-    <!-- Bloque temporal informativo -->
     <section class="contact-form">
       <div class="contact-placeholder">
         <p id="cv-mensaje" style="white-space: pre-wrap;">Pronto habilitaremos nuestro formulario de contacto para recibir tus mensajes directamente desde esta página. Mientras tanto, puedes comunicarte con nosotros a través de los siguientes medios:</p>
       </div>
     </section>
 
-    <!-- Información de contacto -->
     <section class="contact-info">
       <h3>Canales de Contacto</h3>
       <ul>
@@ -87,7 +80,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-watermark">
       <img src="img/logo11.png" alt="" aria-hidden="true">
@@ -120,7 +112,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=reproductor_v1000"></script>
+  <script src="js/main.js?v=v2000_final"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => loadContent('contacto'));
   </script>

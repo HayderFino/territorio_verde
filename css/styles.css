@@ -875,3 +875,70 @@ nav {
     justify-content: center;
   }
 }
+
+/* === MODAL DE EXPORTACIÓN === */
+.modal-export {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 77, 44, 0.85); /* Verde oscuro institucional con transparencia */
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center; justify-content: center;
+  z-index: 10000;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-export.active {
+  opacity: 1; pointer-events: all;
+}
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 350px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+.modal-export.active .modal-content {
+  transform: translateY(0);
+}
+.modal-content h3 { color: #006b3f; margin-bottom: 20px; }
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.btn-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #f9f9f9;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-opt:hover {
+  background: #eef7f0;
+  border-color: #006b3f;
+  color: #006b3f;
+  transform: translateX(5px);
+}
+.btn-opt i { color: #006b3f; font-size: 1.1rem; }
+.btn-close-modal {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}

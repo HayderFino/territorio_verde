@@ -1,22 +1,16 @@
-// ==========================================
-// MANTENER EL AUDIO AL PRINCIPIO PARA EVITAR BLOQUEOS
-// ==========================================
-
-console.trace("Audio Engine Supreme v1000 - Entry point");
-
-// 1. Funciones de UI
+/**
+ * Audio Engine & UI Sync
+ */
 function syncUI(isPlaying) {
     const btn = document.getElementById('btnLive');
     const liveText = document.getElementById('liveText');
     const liveIndicator = document.getElementById('liveIndicator');
     const liveStatus = document.getElementById('liveStatus');
 
-    if (!btn) { console.warn("Button btnLive not found!"); return; }
-
-    console.log("Syncing UI for", window.location.pathname, ":", isPlaying ? "Live" : "Off");
+    if (!btn) return;
 
     if (isPlaying) {
-        if (btn) btn.classList.add('playing');
+        btn.classList.add('playing');
         if (liveText) liveText.textContent = 'En Vivo ·';
         if (liveIndicator) {
             liveIndicator.classList.add('live');
@@ -24,7 +18,7 @@ function syncUI(isPlaying) {
         }
         if (liveStatus) liveStatus.textContent = 'En Vivo';
     } else {
-        if (btn) btn.classList.remove('playing');
+        btn.classList.remove('playing');
         if (liveText) liveText.textContent = 'Oír en Vivo';
         if (liveIndicator) {
             liveIndicator.classList.remove('live');
@@ -34,7 +28,6 @@ function syncUI(isPlaying) {
     }
 }
 
-// 2. Funciones globales expuestas
 window.toggleRadioStream = function() {
     const audio = document.getElementById('stream');
     if (!audio) return;
@@ -44,8 +37,7 @@ window.toggleRadioStream = function() {
         audio.play().then(() => {
             localStorage.setItem('audioIsPlaying', 'true');
             syncUI(true);
-        }).catch(err => {
-            console.warn("Play error:", err);
+        }).catch(() => {
             localStorage.setItem('audioIsPlaying', 'true');
             syncUI(true);
         });
@@ -57,20 +49,67 @@ window.toggleRadioStream = function() {
 };
 
 window.togglePlay = window.toggleRadioStream;
-window.shareLink = function() {
-    const url = window.location.href;
-    if (navigator.share) {
-        navigator.share({ title: 'En Territorio Verde – Radio CAS', url });
-    } else {
-        navigator.clipboard.writeText(url).then(() => alert('¡Enlace copiado!'));
-    }
+
+const SIGNAL_URL = "https://sonic.paulatina.co/8186/stream";
+
+window.toggleExportModal = function() {
+  let modal = document.getElementById('modal-export');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-export';
+    modal.className = 'modal-export';
+    modal.innerHTML = `
+      <div class="modal-content">
+        <h3><i class="fas fa-broadcast-tower" style="color:#006b3f;margin-right:8px;"></i>Exportar Emisora</h3>
+        <div class="export-options">
+          <button class="btn-opt" onclick="shareDirectSignal()">
+            <i class="fas fa-share-nodes"></i> Compartir Señal (Apps)
+          </button>
+          <button class="btn-opt" onclick="exportOnlyLink()">
+            <i class="fas fa-link"></i> Copiar Enlace Directo
+          </button>
+          <a href="senal_en_vivo.m3u" download="senal_en_vivo.m3u" class="btn-opt">
+            <i class="fas fa-file-audio"></i> Descargar para VLC / Winamp
+          </a>
+          <button class="btn-opt" onclick="shareWebsiteLink()">
+            <i class="fas fa-globe"></i> Compartir Página Web
+          </button>
+        </div>
+        <button class="btn-close-modal" onclick="window.closeExportModal()">✕ Cerrar</button>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) window.closeExportModal(); });
+  }
+  modal.classList.add('active');
 };
 
-// 3. Inicialización inmediata y robusta
+window.closeExportModal = function() {
+  const modal = document.getElementById('modal-export');
+  if (modal) modal.classList.remove('active');
+};
+
+window.shareDirectSignal = function() {
+  window.open(SIGNAL_URL, '_blank');
+};
+
+window.exportOnlyLink = function() {
+  navigator.clipboard.writeText(SIGNAL_URL).then(() => {
+    alert('¡Enlace directo a la señal de audio copiado!');
+  });
+};
+
+window.shareWebsiteLink = function() {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'En Territorio Verde – Radio CAS', url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => alert('¡Enlace de la web copiado!'));
+  }
+};
+
 function startAudioEngine() {
     const audio = document.getElementById("stream");
     if (!audio) {
-        // Reintentar en DOMContentLoaded si el script cargó muy rápido
         document.addEventListener("DOMContentLoaded", startAudioEngine);
         return;
     }
@@ -98,14 +137,11 @@ function startAudioEngine() {
     audio.addEventListener("pause", () => { localStorage.setItem('audioIsPlaying', 'false'); syncUI(false); });
 }
 
-// Ejecución
 startAudioEngine();
 
-// ==========================================
-// RESTO DE LÓGICA (HEADER, SCROLL, CONTENIDO)
-// ==========================================
-
-/* === HEADER DESAPARECE/REAPARECE === */
+/**
+ * UI Logic (Header, Intersection Observer, YouTube)
+ */
 let lastScrollTop = 0;
 const mainHeader = document.getElementById("mainHeader");
 if (mainHeader) {
@@ -120,7 +156,6 @@ if (mainHeader) {
   });
 }
 
-/* === EFECTO APARICIÓN SUAVE === */
 const intersectionObs = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -135,13 +170,14 @@ document.querySelectorAll(".section-container").forEach((section) => {
   intersectionObs.observe(section);
 });
 
-/* === CARGA DE YOUTUBE === */
 window.addEventListener("load", () => {
   const yt = document.getElementById("youtubeIframe");
   if (yt) setTimeout(() => { yt.src = yt.getAttribute("data-src"); }, 3500);
 });
 
-// ==== CARGA DINÁMICA DE CONTENIDO SEGURO ====
+/**
+ * Dynamic Content Loading
+ */
 async function loadContent(page) {
   try {
     const response = await fetch(`data/${page}/config.json?v=${new Date().getTime()}`);
@@ -223,7 +259,9 @@ async function loadContent(page) {
   }
 }
 
-// ==== LÓGICA DEL CAROUSEL ====
+/**
+ * Carousel Logic
+ */
 let slideIndex = 0;
 let carouselInterval;
 function startCarousel() {
@@ -243,5 +281,3 @@ function moveSlide(step) {
   showSlide(slideIndex);
   startCarousel();
 }
-
-
