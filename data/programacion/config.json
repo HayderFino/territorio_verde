@@ -27,6 +27,22 @@
             "miercoles": "EcoMúsica",
             "jueves": "EcoMúsica",
             "viernes": "EcoMúsica"
+        },
+        {
+            "hora": "10:00 - 11:00 a.m.",
+            "lunes": "Jóvenes por el Cambio",
+            "martes": "Educación Verde",
+            "miercoles": "Jóvenes por el Cambio",
+            "jueves": "Educación Verde",
+            "viernes": "Jóvenes por el Cambio"
+        },
+        {
+            "hora": "11:00 - 12:00 m.",
+            "lunes": "Ambiente en Acción",
+            "martes": "Ambiente en Acción",
+            "miercoles": "Ambiente en Acción",
+            "jueves": "Ambiente en Acción",
+            "viernes": "Ambiente en Acción"
         }
     ]
 }

@@ -1,14 +1,14 @@
 {
-  "introduccion": {
-    "titulo": "Contáctanos",
-    "parrafo": "Queremos escucharte. Si tienes comentarios, sugerencias o deseas comunicarte con el equipo de En Territorio Verde, puedes hacerlo a través de nuestros canales oficiales. "
-  },
-  "mensaje_temporal": {
-    "parrafo": "Pronto habilitaremos nuestro formulario de contacto para recibir tus mensajes directamente desde esta página. Mientras tanto, puedes comunicarte con nosotros a través de los siguientes medios:       "
-  },
-  "canales_de_contacto": {
-    "correo": "comunicaciones@cas.gov.co",
-    "telefono": "(607) 622 8000",
-    "direccion": "Corporación Autónoma Regional de Santander - CAS, Bucaramanga, Santander"
-  }
+    "introduccion": {
+        "titulo": "Contáctanos",
+        "parrafo": "Queremos escucharte. Si tienes comentarios, sugerencias o deseas comunicarte con el equipo de En Territorio Verde, puedes hacerlo a través de nuestros canales oficiales. "
+    },
+    "mensaje_temporal": {
+        "parrafo": "Pronto habilitaremos nuestro formulario de contacto para recibir tus mensajes directamente desde esta página. Mientras tanto, puedes comunicarte con nosotros a través de los siguientes medios:       "
+    },
+    "canales_de_contacto": {
+        "correo": "comunicaciones@cas.gov.co",
+        "telefono": "(607) 622 8000",
+        "direccion": "Corporación Autónoma Regional de Santander - CAS, San Gil, Santander"
+    }
 }

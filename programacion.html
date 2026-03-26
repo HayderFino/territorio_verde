@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Programas | En Territorio Verde</title>
   <link rel="icon" href="img/favicon.png" type="image/png" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
   <header class="main-header" id="mainHeader">
     <div class="header-container">
       <div class="logo-container">
-        <img src="img/barranquero.png" alt="Barrenquero" class="barranquero-logo" loading="lazy">
+        <img src="logo.jpeg" alt="En Territorio Verde – Radio CAS" class="site-logo" loading="lazy">
       </div>
 
       <!-- menú -->
@@ -24,22 +24,33 @@
           <li><a href="programacion.html" class="active">Programación</a></li>
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="contacto.html">Contacto</a></li>
-          <li class="admin-link"><a href="Administrador/index.html" class="btn-login"><i class="fas fa-user-lock"></i> Ingresar</a></li>
+          <li class="admin-link" style="display:none"><a href="Administrador/index.html" class="btn-login"><i class="fas fa-user-lock"></i> Ingresar</a></li>
         </ul>
       </nav>
 
       <!-- reproductor a la derecha -->
       <div class="contenedor-audio">
-        <audio id="stream" controls preload="none">
+        <audio id="stream" preload="auto">
           <source src="https://sonic.paulatina.co/8186/stream" type="audio/mpeg" />
-          Tu navegador no soporta la reproducción de audio.
         </audio>
+
+        <button id="btnLive" class="btn-live" onclick="toggleRadioStream()" title="Oír en Vivo">
+          <div class="freq-waves" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <i class="fas fa-broadcast-tower"></i>
+          <span id="liveText">Oír en Vivo</span>
+        </button>
+
+        <button class="btn-share" onclick="shareLink()" title="Compartir enlace">
+          <i class="fas fa-share-alt"></i>
+        </button>
 
         <div id="liveIndicator" class="offline" aria-live="polite" role="status">
           <div class="live-waves" aria-hidden="true">
             <span></span><span></span><span></span>
           </div>
-          <span id="liveText">Fuera del Aire</span>
+          <span id="liveStatus">Fuera del Aire</span>
         </div>
       </div>
     </div>
@@ -147,11 +158,17 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <div class="footer-watermark">
+      <img src="img/logo11.png" alt="" aria-hidden="true">
+    </div>
+
     <div class="footer-container">
       <div class="footer-info">
         <h4>Contáctanos</h4>
         <p><i class="fas fa-location-dot"></i> Corporación Autónoma Regional de Santander - CAS</p>
+        <p><i class="fas fa-envelope"></i> <a href="mailto:enterritorioverde@cas.gov.co">enterritorioverde@cas.gov.co</a></p>
         <p><i class="fas fa-envelope"></i> comunicaciones@cas.gov.co</p>
+        <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/573208036330" target="_blank">320 803 6330</a></p>
         <p><i class="fas fa-phone"></i> (607) 622 8000</p>
         <p><i class="fas fa-globe"></i> <a href="https://www.cas.gov.co" target="_blank">www.cas.gov.co</a></p>
       </div>
@@ -162,6 +179,7 @@
           <a href="https://www.facebook.com/CAS.Santander" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="https://youtube.com/@cas_santander9133?si=XEh2lTtl3xtiagF0" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
           <a href="https://www.instagram.com/cas.santander?igsh=ZzN6Nnd5YWltYXcw" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/573208036330" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
     </div>
@@ -171,7 +189,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js?v=reproductor_v1000"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => loadContent('programacion'));
   </script>
