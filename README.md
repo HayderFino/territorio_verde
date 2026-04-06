@@ -21,10 +21,4 @@ Proyecto web moderno para la emisora institucional de la Corporación Autónoma 
 4. **Resilencia de Audio**: El motor de audio persiste el estado (Play/Pause) entre navegaciones usando `localStorage`.
 5. **SEO & Performance**: Uso de etiquetas semánticas, lazy loading para imágenes e iframes, y versionamiento de caché (`?v=N`).
 
-## 👨‍💻 Para Programadores Futuros
-- **Actualizar Colores**: Cambia las variables en las primeras líneas de `css/styles.css`.
-- **Añadir Funcionalidad**: Extiende el objeto `RadioApp` en `js/main.js`.
-- **Nuevas Secciones**: Crea una carpeta en `/data` con un `config.json` y usa `RadioApp.loadPageContent('nombre')`.
-
----
 © 2026 En Territorio Verde · Corporación Autónoma Regional de Santander - CAS. Hayder Fino
