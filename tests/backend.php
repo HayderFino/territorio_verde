@@ -24,7 +24,6 @@ function runTest($name, $url, $method = 'GET', $data = null) {
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
     
     $success = ($httpCode >= 200 && $httpCode < 300);
     $color = $success ? 'green' : 'red';
