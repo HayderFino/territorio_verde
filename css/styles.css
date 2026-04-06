@@ -680,21 +680,30 @@ nav {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  margin-right: auto;
-  padding-left: 0;
-  margin-left: 0;
+  margin-right: 25px; 
+  width: 120px; /* Ajustado al nuevo tamaño */
+  height: 80px;
+  position: relative;
 }
 
 .site-logo {
-  height: 55px;
-  width: auto;
+  height: 100px !important; /* Tamaño más contenido y elegante */
+  width: auto !important;
   object-fit: contain;
   display: block;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 4px 15px rgba(0, 107, 63, 0.15));
+  position: absolute;
+  top: 5px; /* Bajado para que no se corte arriba */
+  left: 0;
+  z-index: 2000;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .site-logo:hover {
-  transform: scale(1.05); /* Micro-interacción premium */
+  transform: scale(1.1) rotate(-3deg);
+  filter: drop-shadow(0 12px 30px rgba(0, 107, 63, 0.3));
 }
 
 /* === Botón Oír en Vivo === */
@@ -804,10 +813,10 @@ nav {
   display: none; /* Usamos background-image para que se repita */
 }
 
-.header,
+.main-header,
 .header-container,
 .contenedor-audio {
-  overflow: visible; /* evita que se creen capas invisibles */
+  overflow: visible !important; /* asegura que el logo gigante se vea */
 }
 
 /* =========================================
