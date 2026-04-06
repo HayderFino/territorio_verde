@@ -1,90 +1,98 @@
 <?php
+/**
+ * En Territorio Verde - Unified Backend API
+ * Handles data persistence, logins, and file uploads.
+ */
+
 header('Content-Type: application/json');
 
-$action = $_GET['action'] ?? '';
-$section = $_GET['section'] ?? 'global';
+// --- CONFIGURATION ---
+const DATA_ROOT = __DIR__ . '/data/';
+const AUTH_CONFIG = __DIR__ . '/Administrador/auth.json';
 
+// --- REQUEST PARSING ---
+$action     = $_GET['action'] ?? '';
+$section    = $_GET['section'] ?? '';
+$method     = $_SERVER['REQUEST_METHOD'];
+
+// Helper for JSON responses
+function respond($data, $code = 200) {
+    http_response_code($code);
+    echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+// Ensure section exists (safe directory traversal)
+if ($section && !preg_match('/^[a-zA-Z0-9_-]+$/', $section)) {
+    respond(["error" => "Sección inválida"], 400);
+}
+
+// --- ENDPOINTS ---
+
+// 1. DATA PERSISTENCE (GET / POST)
 if ($action === 'data') {
-    $filePath = __DIR__ . '/data/' . $section . '/config.json';
-    
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (!file_exists($filePath)) {
-            http_response_code(404);
-            echo json_encode(["error" => "No encontrado"]);
-            exit;
-        }
+    $filePath = DATA_ROOT . $section . '/config.json';
+
+    if ($method === 'GET') {
+        if (!file_exists($filePath)) respond(["error" => "Archivo no encontrado"], 404);
         echo file_get_contents($filePath);
         exit;
     }
-    
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if ($method === 'POST') {
         $input = file_get_contents('php://input');
-        
-        $dir = dirname($filePath);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        
         $data = json_decode($input);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-            echo json_encode(["status" => "success", "message" => "Guardado correctamente"]);
+
+        if (json_last_error() !== JSON_ERROR_NONE) respond(["error" => "JSON inválido"], 400);
+
+        $dir = dirname($filePath);
+        if (!is_dir($dir)) mkdir($dir, 0777, true);
+
+        if (file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))) {
+            respond(["status" => "success", "message" => "Guardado correctamente"]);
         } else {
-            http_response_code(400);
-            echo json_encode(["status" => "error", "message" => "JSON Invalido"]);
+            respond(["error" => "No se pudo escribir en el disco"], 500);
         }
-        exit;
     }
 }
 
-if ($action === 'upload' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+// 2. FILE UPLOADS (POST)
+if ($action === 'upload' && $method === 'POST') {
     if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
-        http_response_code(400);
-        echo json_encode(["error" => "No file uploaded"]);
-        exit;
+        respond(["error" => "Error en la subida del archivo"], 400);
     }
-    
-    $fileTmpPath = $_FILES['image']['tmp_name'];
-    $fileName = $_FILES['image']['name'];
-    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-    
-    $newFileName = time() . '.' . $fileExtension;
-    
-    $uploadFileDir = __DIR__ . '/data/' . $section . '/';
-    if (!is_dir($uploadFileDir)) {
-        mkdir($uploadFileDir, 0777, true);
+
+    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'm3u'])) {
+        respond(["error" => "Formato de archivo no permitido"], 400);
     }
+
+    $newFileName = time() . '_' . uniqid() . '.' . $ext;
+    $uploadDir = DATA_ROOT . $section . '/';
     
-    $dest_path = $uploadFileDir . $newFileName;
-    
-    if (move_uploaded_file($fileTmpPath, $dest_path)) {
-        $relativePath = 'data/' . $section . '/' . $newFileName;
-        echo json_encode(["url" => $relativePath]);
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $newFileName)) {
+        respond(["url" => "data/$section/$newFileName"]);
     } else {
-        http_response_code(500);
-        echo json_encode(["error" => "Error guardando imagen"]);
+        respond(["error" => "Error interno al mover el archivo"], 500);
     }
-    exit;
 }
 
-if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
+// 3. ADMINISTRATOR LOGIN (POST)
+if ($action === 'login' && $method === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
     $user = $data['user'] ?? '';
     $pass = $data['pass'] ?? '';
-    
-    $authPath = __DIR__ . '/Administrador/auth.json';
-    if (file_exists($authPath)) {
-        $auth = json_decode(file_get_contents($authPath), true);
+
+    if (file_exists(AUTH_CONFIG)) {
+        $auth = json_decode(file_get_contents(AUTH_CONFIG), true);
         if ($user === $auth['user'] && $pass === $auth['pass']) {
-            echo json_encode(["status" => "success", "token" => "logged_in"]);
-            exit;
+            respond(["status" => "success", "token" => "logged_in"]);
         }
     }
-    http_response_code(401);
-    echo json_encode(["error" => "Credenciales incorrectas"]);
-    exit;
+    respond(["error" => "Credenciales inválidas"], 401);
 }
 
-http_response_code(404);
-echo json_encode(["error" => "Endpoint not found"]);
+// Default 404
+respond(["error" => "Endpoint no encontrado"], 404);

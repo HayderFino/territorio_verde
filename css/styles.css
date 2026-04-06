@@ -1,6 +1,29 @@
-/* =========================
-   ESTILOS GENERALES
-========================= */
+:root {
+  /* Paleta de Colores */
+  --primary-color: #006b3f;
+  --primary-hover: #049c5a;
+  --secondary-color: #f39200;
+  --accent-color: #004d2c;
+  --text-dark: #2f4f2f;
+  --text-light: #fdfdfd;
+  --text-muted: #666;
+  --bg-color: #fdfdfd;
+  --bg-alt: #f5f9f4;
+  --error: #e74c3c;
+  
+  /* Tipografía */
+  --font-main: 'Montserrat', sans-serif;
+  
+  /* Layout */
+  --header-height: 80px;
+  --container-max-width: 1200px;
+  
+  /* Transiciones */
+  --transition-fast: 0.3s ease;
+  --transition-slow: 0.8s ease-in-out;
+  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,11 +31,11 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #fdfdfd;
-  color: #2f4f2f;
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
   line-height: 1.6;
-  padding-top: 80px; /* Sincronizado con el nuevo alto del header */
+  padding-top: var(--header-height);
 }
 
 /* =========================
